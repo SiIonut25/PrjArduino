@@ -14,11 +14,25 @@ function TryLogin(){
 	$.ajax({
 		method: "POST",
 		url: "/login",
-		data: { username: $("#defaultForm-email").val(), password: $("#defaultForm-pass").val() }
-	  })
-		.done(function( msg ) {
-		  alert( "Data Saved: " + msg );
-		});
+		data: { username: $("#defaultForm-email").val(), password: $("#defaultForm-pass").val() },
+		statusCode: {
+            400: function(msq) {
+                console.log(msq);
+			},
+			401: function(msq) {
+                console.log(msq);
+            },
+            200: function(response) {
+                console.log(response);
+            }
+        },
+        success: function() {
+            console.log("success");
+        },
+        error: function(e) {
+            alert(e);
+        }
+	  });
 }
 
 
@@ -80,7 +94,7 @@ var menuHtml = '<nav class="navbar navbar-expand-lg navbar-light bg-light">\
 				</div>\
 			</div>\
 			<div class="modal-footer d-flex justify-content-center">\
-				<button class="btn btn-default id="btnLogin">Login</button>\
+				<button class="btn btn-default" id="btnLogin">Login</button>\
 			</div>\
 			</div>\
 		</div>\
