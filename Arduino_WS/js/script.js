@@ -1,20 +1,22 @@
 $(document).ready(function(){
 	console.log("ready");
 	AddBootstrapMenu();
+	TryAutoLogin();
 });
 
 function AddBootstrapMenu(){
 	$("#divHeader").html(menuHtml + loginHtml);
 	$("#btnLogin").click(function(){
-		TryLogin();
+		var data = { username: userName, password: userPass };
+		TryLogin("/login", data);
 	});
 }
 
-function TryLogin(){
+function TryLogin(url, data){
 	$.ajax({
 		method: "POST",
-		url: "/login",
-		data: { username: $("#defaultForm-email").val(), password: $("#defaultForm-pass").val() },
+		url: url,
+		data: data,
 		statusCode: {
             400: function(msq) {
                 console.log(msq);
@@ -22,8 +24,11 @@ function TryLogin(){
 			401: function(msq) {
                 console.log(msq);
             },
-            200: function(response) {
-                console.log(response);
+            200: function(authkey) {
+				console.log("authkey: " + authkey);
+				$.cookie('authkey', authkey);
+				$('#modalLoginForm').modal('hide');
+				$("#liWelcome").show();
             }
         },
         success: function() {
@@ -35,6 +40,12 @@ function TryLogin(){
 	  });
 }
 
+function TryAutoLogin(){
+	var loginCookie = $.cookie('authkey');
+	var data = { authkey: authkey };
+	TryLogin("/cookie-login", data);
+}
+
 
 
 var menuHtml = '<nav class="navbar navbar-expand-lg navbar-light bg-light">\
@@ -44,6 +55,17 @@ var menuHtml = '<nav class="navbar navbar-expand-lg navbar-light bg-light">\
 	</button>\
   	<div class="collapse navbar-collapse" id="navbarSupportedContent">\
 	  <ul class="navbar-nav mr-auto">\
+	  <li class="dropdown" id="liWelcome" style="display:none;">\
+            <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false"> \
+                Welcome, User <b class="caret"></b>\
+            </a>\
+            <div class="dropdown-menu dropdown-menu-right position-absolute" aria-labelledby="navbarDropdown">\
+				<a class="dropdown-item" href="#">Logout</a>\
+				<div class="dropdown-divider"></div>\
+                <a class="dropdown-item" href="#">Another action</a>\
+                <a class="dropdown-item" href="#">Something else here</a>\
+            </div>\
+        </li>\
 		<li class="nav-item active">\
 		  <a class="nav-link" href="/">Acasa<span class="sr-only">(current)</span></a>\
 		</li>\
@@ -65,10 +87,6 @@ var menuHtml = '<nav class="navbar navbar-expand-lg navbar-light bg-light">\
 		  <a class="nav-link disabled" href="#">Disabled</a>\
 		</li>\
 	  </ul>\
-	  <form class="form-inline my-2 my-lg-0">\
-		<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">\
-		<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>\
-	  </form>\
 	</div>\
   </nav>';
 
