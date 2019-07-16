@@ -74,11 +74,15 @@ var menuHtml = '<nav class="navbar navbar-expand-lg navbar-light bg-light">\
 		</li>\
 		<li class="nav-item dropdown">\
 		  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">\
-			Dropdown\
+			LED\
 		  </a>\
 		  <div class="dropdown-menu" aria-labelledby="navbarDropdown">\
-			<a class="dropdown-item" href="#">Action</a>\
-			<a class="dropdown-item" href="#">Another action</a>\
+			<a class="dropdown-item" href="/led1">Channel 1</a>\
+			<a class="dropdown-item" href="/led2">Channel 2</a>\
+			<a class="dropdown-item" href="/led3">Channel 3</a>\
+			<a class="dropdown-item" href="/led4">Channel 4</a>\
+			<a class="dropdown-item" href="/led5">Channel 5</a>\
+			<a class="dropdown-item" href="/led6">Channel 6</a>\
 			<div class="dropdown-divider"></div>\
 			<a class="dropdown-item" href="#">Something else here</a>\
 		  </div>\
