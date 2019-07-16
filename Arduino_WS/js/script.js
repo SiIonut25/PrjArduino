@@ -42,7 +42,7 @@ function TryLogin(url, data){
 
 function TryAutoLogin(){
 	var loginCookie = $.cookie('authkey');
-	var data = { authkey: authkey };
+	var data = { authkey: loginCookie };
 	TryLogin("/cookie-login", data);
 }
 
