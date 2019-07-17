@@ -40,6 +40,8 @@ function BindLedPage(){
 function AddBootstrapMenu(){
 	$("#divHeader").html(menuHtml + loginHtml);
 	$("#btnLogin").click(function(){
+		var userName = $("#defaultForm-email").val();
+		var userPass = $("#defaultForm-pass").val();
 		var data = { username: userName, password: userPass };
 		TryLogin("/login", data);
 	});
