@@ -1,8 +1,41 @@
+var pageUrl = "";
+var pathName = "";
+
+var divMiddleContainer = null;
+
 $(document).ready(function(){
 	console.log("ready");
+	
+	divMiddleContainer = $("#divMiddleContainer");
+	
+	
 	AddBootstrapMenu();
 	TryAutoLogin();
+	
+	//get page url
+	pageUrl = $(location).attr('href');
+	pathName = window.location.pathname.toLowerCase();
+	if(pageUrl){
+		pageUrl = pageUrl.toLowerCase();
+		if (pageUrl.indexOf("/led1") > 0 || pageUrl.indexOf("/led2") > 0 || pageUrl.indexOf("/led3") > 0 || 
+				pageUrl.indexOf("/led4") > 0 || pageUrl.indexOf("/led5") > 0 || pageUrl.indexOf("/led6") > 0){
+			$("#divMiddleContainer").show();
+			BindLedPage();
+		}
+	}
 });
+
+function BindLedPage(){
+	divMiddleContainer.show();
+	divMiddleContainer.html("<div class='c-header'></div><div class='c-levels'></div>");
+	for(index = 0; index < 96; index++){
+		divMiddleContainer.find(".c-levels").append("<input type='text' id='led_" + index + "' />");
+	}
+	
+	if(pathName == "/led1"){
+		divMiddleContainer.find(".c-header").html("Channel 1 Settings - Color: Cool White");
+	}
+}
 
 function AddBootstrapMenu(){
 	$("#divHeader").html(menuHtml + loginHtml);
@@ -29,6 +62,7 @@ function TryLogin(url, data){
 				$.cookie('authkey', authkey);
 				$('#modalLoginForm').modal('hide');
 				$("#liWelcome").show();
+				$("#divLedSettings").show();
             }
         },
         success: function() {
@@ -72,7 +106,7 @@ var menuHtml = '<nav class="navbar navbar-expand-lg navbar-light bg-light">\
 		<li class="nav-item">\
 		  <a class="nav-link" href="" data-toggle="modal" data-target="#modalLoginForm">Login</a>\
 		</li>\
-		<li class="nav-item dropdown">\
+		<li class="nav-item dropdown" id="divLedSettings" style="display:none;">\
 		  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">\
 			LED\
 		  </a>\
