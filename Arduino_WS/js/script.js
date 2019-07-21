@@ -71,7 +71,7 @@ function TryLogin(url, data){
             console.log("success");
         },
         error: function(e) {
-            alert(e);
+            console.log(e.responseText);
         }
 	  });
 }
