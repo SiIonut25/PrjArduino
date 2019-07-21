@@ -90,6 +90,28 @@ function TryAutoLogin(){
 	TryLogin("/cookie-login", data);
 }
 
+function GetTempData(url, data){
+	$.ajax({
+		method: "POST",
+		url: "/get-temp",
+		data: data,
+		statusCode: {
+			401: function(msq) {
+                console.log(msq);
+            },
+            200: function(result) {
+				
+            }
+        },
+        success: function() {
+            console.log("success");
+        },
+        error: function(e) {
+            console.log(e.responseText);
+        }
+	  });
+}
+
 
 
 var menuHtml = '<nav class="navbar navbar-expand-lg navbar-light bg-light">\
