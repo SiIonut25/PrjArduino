@@ -55,9 +55,13 @@ function TryLogin(url, data){
 		statusCode: {
             400: function(msq) {
                 console.log(msq);
+				$("#liLogin").show();
+				$("#liLogout").hide();
 			},
 			401: function(msq) {
                 console.log(msq);
+				$("#liLogin").show();
+				$("#liLogout").hide();
             },
             200: function(authkey) {
 				console.log("authkey: " + authkey);
@@ -65,6 +69,8 @@ function TryLogin(url, data){
 				$('#modalLoginForm').modal('hide');
 				$("#liWelcome").show();
 				$("#divLedSettings").show();
+				$("#liLogin").hide();
+				$("#liLogout").show();
             }
         },
         success: function() {
@@ -72,6 +78,8 @@ function TryLogin(url, data){
         },
         error: function(e) {
             console.log(e.responseText);
+			$("#liLogin").show();
+			$("#liLogout").hide();
         }
 	  });
 }
@@ -105,8 +113,11 @@ var menuHtml = '<nav class="navbar navbar-expand-lg navbar-light bg-light">\
 		<li class="nav-item active">\
 		  <a class="nav-link" href="/">Acasa<span class="sr-only">(current)</span></a>\
 		</li>\
-		<li class="nav-item">\
+		<li class="nav-item" id="liLogin" style="display:none;">\
 		  <a class="nav-link" href="" data-toggle="modal" data-target="#modalLoginForm">Login</a>\
+		</li>\
+		<li class="nav-item" id="liLogout">\
+		  <a class="nav-link" href="">Logout</a>\
 		</li>\
 		<li class="nav-item dropdown" id="divLedSettings" style="display:none;">\
 		  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">\
