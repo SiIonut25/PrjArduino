@@ -23,6 +23,10 @@ $(document).ready(function(){
 			BindLedPage();
 		}
 	}
+	
+	GetTempData();
+	
+	setInterval(function(){ GetTempData(); }, 30000);
 });
 
 function BindLedPage(){
@@ -90,34 +94,40 @@ function TryAutoLogin(){
 	TryLogin("/cookie-login", data);
 }
 
-function GetTempData(url, data){
+function GetTempData(){
 	$.ajax({
 		method: "POST",
 		url: "/get-temp",
-		data: data,
+		//data: data,
 		statusCode: {
 			401: function(msq) {
                 console.log(msq);
             },
             200: function(result) {
 				var jsonResult = jQuery.parseJSON(result);
-				var strHtml = "<div class='row m-t-2 p-1 font-weight-bold' style='color:" + jsonResult.waterTempColor + "'>";
-				strHtml += "<div class='col-7'>Temperatura apa:</div>";
-				strHtml += "<div class='col-3'>" + jsonResult.tempWater + "</div>";
-				strHtml += "<div class='col-1' style='background-color:" + jsonResult.waterTempColor + "'>&nbsp;</div>";
-				strHtml += "</div>";
-				strHtml += "<div class='row m-t-2 p-1 font-weight-bold' style='color:" + jsonResult.roomTempColor + "'>";
-				strHtml += "<div class='col-7'>Temperatura apa:</div>";
-				strHtml += "<div class='col-3'>" + jsonResult.tempRoom + "</div>";
-				strHtml += "<div class='col-1' style='background-color:" + jsonResult.roomTempColor + "'>&nbsp;</div>";
-				strHtml += "</div>";
-				strHtml += "<div class='row m-t-2 p-1 font-weight-bold' style='color:" + jsonResult.ledTempColor + "'>";
-				strHtml += "<div class='col-7'>Temperatura apa:</div>";
-				strHtml += "<div class='col-3'>" + jsonResult.tempLed + "</div>";
-				strHtml += "<div class='col-1' style='background-color:" + jsonResult.ledTempColor + "'>&nbsp;</div>";
-				strHtml += "</div>";
 				
-				$("#divTopContainer").append(strHtml);
+				if($("#divTempWater").length == 0){
+					var strHtml = "<div id='divTempWater' class='row m-t-2 p-1 font-weight-bold' style='color:" + jsonResult.waterTempColor + "'>";
+					strHtml += "<div class='col-7'>Temperatura apa:</div>";
+					strHtml += "<div class='col-3 temp-value'>" + jsonResult.tempWater + "</div>";
+					strHtml += "<div class='col-1 temp-color' style='background-color:" + jsonResult.waterTempColor + "'>&nbsp;</div>";
+					strHtml += "</div>";
+					strHtml += "<div id='divTempRoom' class='row m-t-2 p-1 font-weight-bold' style='color:" + jsonResult.roomTempColor + "'>";
+					strHtml += "<div class='col-7'>Temperatura apa:</div>";
+					strHtml += "<div class='col-3 temp-value'>" + jsonResult.tempRoom + "</div>";
+					strHtml += "<div class='col-1 temp-color' style='background-color:" + jsonResult.roomTempColor + "'>&nbsp;</div>";
+					strHtml += "</div>";
+					strHtml += "<div id='divTempLed' class='row m-t-2 p-1 font-weight-bold' style='color:" + jsonResult.ledTempColor + "'>";
+					strHtml += "<div class='col-7'>Temperatura apa:</div>";
+					strHtml += "<div class='col-3 temp-value'>" + jsonResult.tempLed + "</div>";
+					strHtml += "<div class='col-1 temp-color' style='background-color:" + jsonResult.ledTempColor + "'>&nbsp;</div>";
+					strHtml += "</div>";
+					
+					$("#divTopContainer").append(strHtml);
+				}
+				else{
+					//replace values
+				}
             }
         },
         success: function() {
