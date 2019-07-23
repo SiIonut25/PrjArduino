@@ -127,15 +127,15 @@ function GetTempData(){
 				}
 				else{
 					//replace values
-					$("divTempWater").attr("style", "color:" + jsonResult.waterTempColor + ";");
-					$("divTempWater .temp-color").attr("style", "background-color:" + jsonResult.waterTempColor + ";");
-					$("divTempWater .temp-value").val(jsonResult.tempWater);
-					$("divTempRoom").attr("style", "color:" + jsonResult.roomTempColor + ";");
-					$("divTempRoom .temp-color").attr("style", "background-color:" + jsonResult.roomTempColor + ";");
-					$("divTempRoom .temp-value").val(jsonResult.tempRoom);
-					$("divTempLed").attr("style", "color:" + jsonResult.ledTempColor + ";");
-					$("divTempLed .temp-color").attr("style", "background-color:" + jsonResult.ledTempColor + ";");
-					$("divTempLed .temp-value").val(jsonResult.tempLed);
+					$("#divTempWater").attr("style", "color:" + jsonResult.waterTempColor + ";");
+					$("#divTempWater .temp-color").attr("style", "background-color:" + jsonResult.waterTempColor + ";");
+					$("#divTempWater .temp-value").html(jsonResult.tempWater);
+					$("#divTempRoom").attr("style", "color:" + jsonResult.roomTempColor + ";");
+					$("#divTempRoom .temp-color").attr("style", "background-color:" + jsonResult.roomTempColor + ";");
+					$("#divTempRoom .temp-value").html(jsonResult.tempRoom);
+					$("#divTempLed").attr("style", "color:" + jsonResult.ledTempColor + ";");
+					$("#divTempLed .temp-color").attr("style", "background-color:" + jsonResult.ledTempColor + ";");
+					$("#divTempLed .temp-value").html(jsonResult.tempLed);
 					
 				}
             }
