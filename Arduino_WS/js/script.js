@@ -38,6 +38,7 @@ function BindLedPage(){
 	
 	if(pathName == "/led1"){
 		divMiddleContainer.find(".c-header").html("Channel 1 Settings - Color: Cool White");
+		GetLedData(1);
 	}
 }
 
@@ -138,6 +139,32 @@ function GetTempData(){
 					$("#divTempLed .temp-value").html(jsonResult.tempLed);
 					
 				}
+            }
+        },
+        success: function() {
+            console.log("success");
+        },
+        error: function(e) {
+            console.log(e.responseText);
+        }
+	  });
+}
+
+
+function GetLedData(channel){
+	var loginCookie = $.cookie('authkey');
+	$.ajax({
+		method: "POST",
+		url: "/get-led",
+		data: { authkey: loginCookie, channel: channel },
+		statusCode: {
+			401: function(msq) {
+                console.log(msq);
+            },
+            200: function(result) {
+				var jsonResult = jQuery.parseJSON(result);
+				
+				
             }
         },
         success: function() {

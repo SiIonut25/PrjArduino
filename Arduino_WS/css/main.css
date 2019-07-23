@@ -17,3 +17,12 @@ html {
 .button2 {
 	background-color: #77878A;
 }
+.c-levels {
+	max-width: 800px;
+    padding-top: 10px;
+}
+.c-levels input {
+	padding: 5px;
+    margin: 5px;
+    width: 20%;
+}
