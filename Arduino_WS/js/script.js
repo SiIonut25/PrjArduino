@@ -31,14 +31,60 @@ $(document).ready(function(){
 
 function BindLedPage(){
 	divMiddleContainer.show();
-	divMiddleContainer.html("<div class='c-header'></div><div class='c-levels'></div>");
+	divMiddleContainer.html("<div class='c-header'></div><div class='c-levels'></div><div class='c-buttons'></div>");
 	for(index = 0; index < 96; index++){
 		divMiddleContainer.find(".c-levels").append("<input type='text' id='led_" + index + "' />");
 	}
-	
+	var ledNr = 0;
 	if(pathName == "/led1"){
+		ledNr = 1;
 		divMiddleContainer.find(".c-header").html("Channel 1 Settings - Color: Cool White");
-		GetLedData(1);
+		GetLedData(ledNr);
+	}
+	else if(pathName == "/led2"){
+		ledNr = 2;
+		divMiddleContainer.find(".c-header").html("Channel 2 Settings - Color: Xxx");
+		GetLedData(ledNr);
+	}
+	else if(pathName == "/led3"){
+		ledNr = 3;
+		divMiddleContainer.find(".c-header").html("Channel 3 Settings - Color: Xxx");
+		GetLedData(ledNr);
+	}
+	else if(pathName == "/led4"){
+		ledNr = 4;
+		divMiddleContainer.find(".c-header").html("Channel 4 Settings - Color: Xxx");
+		GetLedData(ledNr);
+	}
+	else if(pathName == "/led5"){
+		ledNr = 5;
+		divMiddleContainer.find(".c-header").html("Channel 5 Settings - Color: Xxx");
+		GetLedData(ledNr);
+	}
+	else if(pathName == "/led6"){
+		ledNr = 6;
+		divMiddleContainer.find(".c-header").html("Channel 6 Settings - Color: Xxx");
+		GetLedData(ledNr);
+	}
+	
+	if($.cookie('authkey')){
+		divMiddleContainer.find(".c-levels input").prop("disabled", false);
+		divMiddleContainer.find(".c-buttons").html('<button type="button" id="btnUpdateLed" led="' + ledNr + '" class="btn btn-primary">Update</button>');
+		//divMiddleContainer.find(".c-buttons").html('<button type="button" class="btn btn-secondary"></button>');
+		
+		$("#btnUpdateLed").click(function(){
+			var ledValues = "";
+			for(index = 0; index < 96; index++){
+				ledValues += $("#led_" + index).val();
+				if(index < 95){
+					ledValues += "#";
+				}
+			}
+			UpdateLedChannel($(this).attr("led"), ledValues);
+		});
+	}
+	else {
+		divMiddleContainer.find(".c-levels input").prop("disabled", true);
 	}
 }
 
@@ -147,7 +193,30 @@ function GetTempData(){
         error: function(e) {
             console.log(e.responseText);
         }
-	  });
+	});
+}
+
+function UpdateLedChannel(ledCh, ledValues){
+	var data = { authkey: loginCookie, channel: ledCh, ledValues: ledValues };
+	$.ajax({
+		method: "POST",
+		url: "/set-led",
+		data: data,
+		statusCode: {
+			401: function(msq) {
+                console.log(msq);
+            },
+            200: function(result) {
+				console.log(result);
+            }
+        },
+        success: function() {
+            console.log("success");
+        },
+        error: function(e) {
+            console.log(e.responseText);
+        }
+	});
 }
 
 
@@ -163,8 +232,9 @@ function GetLedData(channel){
             },
             200: function(result) {
 				var jsonResult = jQuery.parseJSON(result);
-				
-				
+				for(ind = 1; ind < 97; ind++){
+					$("#led_" + (ind - 1)).val(jsonResult[ind]);
+				}
             }
         },
         success: function() {
