@@ -197,7 +197,7 @@ function GetTempData(){
 }
 
 function UpdateLedChannel(ledCh, ledValues){
-	var data = { authkey: loginCookie, channel: ledCh, ledValues: ledValues };
+	var data = { authkey: $.cookie('authkey'), channel: ledCh, ledValues: ledValues };
 	$.ajax({
 		method: "POST",
 		url: "/set-led",
