@@ -37,7 +37,7 @@ $(document).ready(function(){
 function BindLedPage(){
 	divMiddleContainer.show();
 	divMiddleContainer.html("<div class='c-header'></div><div class='c-levels'></div><div class='c-buttons'></div>");
-	for(index = 0; index < 96; index++){
+	for(index = 0; index < 97; index++){
 		divMiddleContainer.find(".c-levels").append("<input type='text' id='led_" + index + "' />");
 	}
 	if(pathName == "/led1"){
@@ -260,7 +260,7 @@ function GetLedData(channel){
             200: function(result) {
 				var jsonResult = jQuery.parseJSON(result);
 				for(ind = 0; ind < 97; ind++){
-					$("#led_" + ind)).val(jsonResult[ind]);
+					$("#led_" + ind).val(jsonResult[ind]);
 				}
             }
         },
