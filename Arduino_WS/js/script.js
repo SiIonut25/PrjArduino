@@ -2,6 +2,7 @@ var pageUrl = "";
 var pathName = "";
 
 var divMiddleContainer = null;
+var selectedLedInterval = null;
 
 $(document).ready(function(){
 	console.log("ready");
@@ -88,7 +89,19 @@ function BindLedPage(){
 	}
 	
 	$("#divMiddleContainer input").click(function(){
-		
+		selectedLedInterval = $(this).attr("id").replace("led_", "")
+		$('#modalSlider').modal('show');
+		$( "#slider" ).slider({
+			value:100,
+			min: 0,
+			max: 100,
+			step: 1,
+			slide: function( event, ui ) {
+				$("#ledAmount").val(ui.value + " %");
+				$("#led_" + selectedLedInterval).val(ui.value + " %");
+			}
+		});
+		$("#ledAmount").val($("#slider").slider("value") + " %");
 	});
 }
 
@@ -312,14 +325,14 @@ var menuHtml = '<nav class="navbar navbar-expand-lg navbar-light bg-light">\
 				</div>\
 				<div class="modal-body mx-3">\
 					<div class="md-form mb-5">\
-					<i class="fas fa-envelope prefix grey-text"></i>\
-					<input type="email" id="defaultForm-email" class="form-control validate">\
-					<label data-error="wrong" data-success="right" for="defaultForm-email">Your email</label>\
+						<i class="fas fa-envelope prefix grey-text"></i>\
+						<input type="email" id="defaultForm-email" class="form-control validate">\
+						<label data-error="wrong" data-success="right" for="defaultForm-email">Your email</label>\
 					</div>\
 					<div class="md-form mb-4">\
-					<i class="fas fa-lock prefix grey-text"></i>\
-					<input type="password" id="defaultForm-pass" class="form-control validate">\
-					<label data-error="wrong" data-success="right" for="defaultForm-pass">Your password</label>\
+						<i class="fas fa-lock prefix grey-text"></i>\
+						<input type="password" id="defaultForm-pass" class="form-control validate">\
+						<label data-error="wrong" data-success="right" for="defaultForm-pass">Your password</label>\
 					</div>\
 				</div>\
 				<div class="modal-footer d-flex justify-content-center">\
@@ -343,6 +356,7 @@ var menuHtml = '<nav class="navbar navbar-expand-lg navbar-light bg-light">\
 						<i class="fas fa-envelope prefix grey-text"></i>\
 						<div id="slider"></div>\
 						<label data-error="wrong" data-success="right" for="defaultForm-email" id="lblLedChannel">Led channel</label>\
+						<input type="text" id="ledAmount" readonly style="border:0; color:#f6931f; font-weight:bold;">\
 					</div>\
 				</div>\
 				<div class="modal-footer d-flex justify-content-center">\
