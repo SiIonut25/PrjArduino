@@ -94,7 +94,7 @@ function BindLedPage(){
 	$("#divMiddleContainer input").click(function(){
 		selectedLedInterval = $(this).attr("id").replace("led_", "");
 		selectedLedValue = $(this).val();
-		$("#modalSlider h4").html("Led " + ledNr + " interval No. " + selectedLedInterval)
+		$("#modalSlider h4").html("Led " + ledNr + " interval No. " + selectedLedInterval);
 		$('#modalSlider').modal('show');
 		
 		$( "#slider" ).slider({
@@ -119,6 +119,9 @@ function AddAdditionalHtml(){
 		var userPass = $("#defaultForm-pass").val();
 		var data = { username: userName, password: userPass };
 		TryLogin("/login", data);
+	});
+	$("#btnCloseLedValue").click(function(){
+		$('#modalSlider').modal('hide');
 	});
 }
 
@@ -256,8 +259,8 @@ function GetLedData(channel){
             },
             200: function(result) {
 				var jsonResult = jQuery.parseJSON(result);
-				for(ind = 1; ind < 97; ind++){
-					$("#led_" + (ind - 1)).val(jsonResult[ind]);
+				for(ind = 0; ind < 97; ind++){
+					$("#led_" + ind)).val(jsonResult[ind]);
 				}
             }
         },
@@ -321,56 +324,54 @@ var menuHtml = '<nav class="navbar navbar-expand-lg navbar-light bg-light">\
 	</div>\
   </nav>';
 
-  var loginHtml = '<div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">\
-		<div class="modal-dialog" role="document">\
-			<div class="modal-content">\
-				<div class="modal-header text-center">\
-					<h4 class="modal-title w-100 font-weight-bold">Sign in</h4>\
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">\
-					<span aria-hidden="true">&times;</span>\
-					</button>\
+var loginHtml = '<div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">\
+	<div class="modal-dialog" role="document">\
+		<div class="modal-content">\
+			<div class="modal-header text-center">\
+				<h4 class="modal-title w-100 font-weight-bold">Sign in</h4>\
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">\
+				<span aria-hidden="true">&times;</span>\
+				</button>\
+			</div>\
+			<div class="modal-body mx-3">\
+				<div class="md-form mb-5">\
+					<i class="fas fa-envelope prefix grey-text"></i>\
+					<input type="email" id="defaultForm-email" class="form-control validate">\
+					<label data-error="wrong" data-success="right" for="defaultForm-email">Your email</label>\
 				</div>\
-				<div class="modal-body mx-3">\
-					<div class="md-form mb-5">\
-						<i class="fas fa-envelope prefix grey-text"></i>\
-						<input type="email" id="defaultForm-email" class="form-control validate">\
-						<label data-error="wrong" data-success="right" for="defaultForm-email">Your email</label>\
-					</div>\
-					<div class="md-form mb-4">\
-						<i class="fas fa-lock prefix grey-text"></i>\
-						<input type="password" id="defaultForm-pass" class="form-control validate">\
-						<label data-error="wrong" data-success="right" for="defaultForm-pass">Your password</label>\
-					</div>\
-				</div>\
-				<div class="modal-footer d-flex justify-content-center">\
-					<button class="btn btn-default" id="btnLogin">Login</button>\
+				<div class="md-form mb-4">\
+					<i class="fas fa-lock prefix grey-text"></i>\
+					<input type="password" id="defaultForm-pass" class="form-control validate">\
+					<label data-error="wrong" data-success="right" for="defaultForm-pass">Your password</label>\
 				</div>\
 			</div>\
-		</div>\
-	</div>';
-	
-	var populSlider = '<div class="modal fade" id="modalSlider" tabindex="-1" role="dialog" aria-labelledby="mySliderLabel" aria-hidden="true" style="display:none">\
-		<div class="modal-dialog" role="document">\
-			<div class="modal-content">\
-				<div class="modal-header text-center">\
-					<h4 class="modal-title w-100 font-weight-bold">Interval No. </h4>\
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">\
-					<span aria-hidden="true">&times;</span>\
-					</button>\
-				</div>\
-				<div class="modal-body mx-3">\
-					<div class="md-form mb-5">\
-						<i class="fas fa-envelope prefix grey-text"></i>\
-						<div id="slider"></div>\
-						<label data-error="wrong" data-success="right" for="defaultForm-email" id="lblLedChannel">Led channel</label>\
-						<input type="text" id="ledAmount" readonly style="border:0; color:#f6931f; font-weight:bold;">\
-					</div>\
-				</div>\
-				<div class="modal-footer d-flex justify-content-center">\
-					<button class="btn btn-default" id="btnLogin">Save</button>\
-				</div>\
+			<div class="modal-footer d-flex justify-content-center">\
+				<button class="btn btn-default" id="btnLogin">Login</button>\
 			</div>\
 		</div>\
-	</div>';
-	
-	
+	</div>\
+</div>';
+
+var populSlider = '<div class="modal fade" id="modalSlider" tabindex="-1" role="dialog" aria-labelledby="mySliderLabel" aria-hidden="true" style="display:none">\
+	<div class="modal-dialog" role="document">\
+		<div class="modal-content">\
+			<div class="modal-header text-center">\
+				<h4 class="modal-title w-100 font-weight-bold">Interval No. </h4>\
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">\
+				<span aria-hidden="true">&times;</span>\
+				</button>\
+			</div>\
+			<div class="modal-body mx-3">\
+				<div class="md-form mb-5">\
+					<i class="fas fa-envelope prefix grey-text"></i>\
+					<div id="slider"></div>\
+					<label data-error="wrong" data-success="right" for="defaultForm-email" id="lblLedChannel">Led channel</label>\
+					<input type="text" id="ledAmount" readonly style="border:0; color:#f6931f; font-weight:bold;">\
+				</div>\
+			</div>\
+			<div class="modal-footer d-flex justify-content-center">\
+				<button class="btn btn-default" id="btnCloseLedValue">Save</button>\
+			</div>\
+		</div>\
+	</div>\
+</div>';

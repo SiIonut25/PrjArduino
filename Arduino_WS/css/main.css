@@ -37,3 +37,6 @@ body{
 #divTopContainer {
 	min-height: 155px;
 }
+#modalSlider #slider {
+	margin-bottom: 20px;
+}
