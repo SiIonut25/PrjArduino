@@ -3,6 +3,10 @@ var pathName = "";
 
 var divMiddleContainer = null;
 var selectedLedInterval = null;
+var selectedLedValue = null;
+
+var ledNr = 0;
+
 
 $(document).ready(function(){
 	console.log("ready");
@@ -36,7 +40,6 @@ function BindLedPage(){
 	for(index = 0; index < 96; index++){
 		divMiddleContainer.find(".c-levels").append("<input type='text' id='led_" + index + "' />");
 	}
-	var ledNr = 0;
 	if(pathName == "/led1"){
 		ledNr = 1;
 		divMiddleContainer.find(".c-header").html("Channel 1 Settings - SUMP");
@@ -89,19 +92,23 @@ function BindLedPage(){
 	}
 	
 	$("#divMiddleContainer input").click(function(){
-		selectedLedInterval = $(this).attr("id").replace("led_", "")
+		selectedLedInterval = $(this).attr("id").replace("led_", "");
+		selectedLedValue = $(this).val();
+		$("#modalSlider h4").html("Led " + ledNr + " interval No. " + selectedLedInterval)
 		$('#modalSlider').modal('show');
+		
 		$( "#slider" ).slider({
-			value:100,
+			value: selectedLedValue,
 			min: 0,
-			max: 100,
+			max: 255,
 			step: 1,
 			slide: function( event, ui ) {
-				$("#ledAmount").val(ui.value + " %");
-				$("#led_" + selectedLedInterval).val(ui.value + " %");
+				$("#ledAmount").val(ui.value + " PWM");
+				$("#led_" + selectedLedInterval).val(ui.value);
 			}
 		});
-		$("#ledAmount").val($("#slider").slider("value") + " %");
+		$("#ledAmount").val($("#slider").slider("value") + " PWM");
+		$("#led_" + selectedLedInterval).val($("#slider").slider("value"));
 	});
 }
 
@@ -346,7 +353,7 @@ var menuHtml = '<nav class="navbar navbar-expand-lg navbar-light bg-light">\
 		<div class="modal-dialog" role="document">\
 			<div class="modal-content">\
 				<div class="modal-header text-center">\
-					<h4 class="modal-title w-100 font-weight-bold">Sign in</h4>\
+					<h4 class="modal-title w-100 font-weight-bold">Interval No. </h4>\
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">\
 					<span aria-hidden="true">&times;</span>\
 					</button>\
