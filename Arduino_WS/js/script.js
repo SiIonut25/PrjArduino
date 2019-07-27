@@ -9,7 +9,7 @@ $(document).ready(function(){
 	divMiddleContainer = $("#divMiddleContainer");
 	
 	
-	AddBootstrapMenu();
+	AddAdditionalHtml();
 	TryAutoLogin();
 	
 	//get page url
@@ -38,32 +38,32 @@ function BindLedPage(){
 	var ledNr = 0;
 	if(pathName == "/led1"){
 		ledNr = 1;
-		divMiddleContainer.find(".c-header").html("Channel 1 Settings - Color: Cool White");
+		divMiddleContainer.find(".c-header").html("Channel 1 Settings - SUMP");
 		GetLedData(ledNr);
 	}
 	else if(pathName == "/led2"){
 		ledNr = 2;
-		divMiddleContainer.find(".c-header").html("Channel 2 Settings - Color: Xxx");
+		divMiddleContainer.find(".c-header").html("Channel 2 Settings - Color: BLUE");
 		GetLedData(ledNr);
 	}
 	else if(pathName == "/led3"){
 		ledNr = 3;
-		divMiddleContainer.find(".c-header").html("Channel 3 Settings - Color: Xxx");
+		divMiddleContainer.find(".c-header").html("Channel 3 Settings - Color: WHITE");
 		GetLedData(ledNr);
 	}
 	else if(pathName == "/led4"){
 		ledNr = 4;
-		divMiddleContainer.find(".c-header").html("Channel 4 Settings - Color: Xxx");
+		divMiddleContainer.find(".c-header").html("Channel 4 Settings - Color: ROYAL BLUE");
 		GetLedData(ledNr);
 	}
 	else if(pathName == "/led5"){
 		ledNr = 5;
-		divMiddleContainer.find(".c-header").html("Channel 5 Settings - Color: Xxx");
+		divMiddleContainer.find(".c-header").html("Channel 5 Settings - Color: RED");
 		GetLedData(ledNr);
 	}
 	else if(pathName == "/led6"){
 		ledNr = 6;
-		divMiddleContainer.find(".c-header").html("Channel 6 Settings - Color: Xxx");
+		divMiddleContainer.find(".c-header").html("Channel 6 Settings - Color: UV");
 		GetLedData(ledNr);
 	}
 	
@@ -86,10 +86,14 @@ function BindLedPage(){
 	else {
 		divMiddleContainer.find(".c-levels input").prop("disabled", true);
 	}
+	
+	$("#divMiddleContainer input").click(function(){
+		
+	});
 }
 
-function AddBootstrapMenu(){
-	$("#divHeader").html(menuHtml + loginHtml);
+function AddAdditionalHtml(){
+	$("#divHeader").html(menuHtml + loginHtml + populSlider);
 	$("#btnLogin").click(function(){
 		var userName = $("#defaultForm-email").val();
 		var userPass = $("#defaultForm-pass").val();
@@ -300,27 +304,52 @@ var menuHtml = '<nav class="navbar navbar-expand-lg navbar-light bg-light">\
   var loginHtml = '<div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">\
 		<div class="modal-dialog" role="document">\
 			<div class="modal-content">\
-			<div class="modal-header text-center">\
-				<h4 class="modal-title w-100 font-weight-bold">Sign in</h4>\
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">\
-				<span aria-hidden="true">&times;</span>\
-				</button>\
-			</div>\
-			<div class="modal-body mx-3">\
-				<div class="md-form mb-5">\
-				<i class="fas fa-envelope prefix grey-text"></i>\
-				<input type="email" id="defaultForm-email" class="form-control validate">\
-				<label data-error="wrong" data-success="right" for="defaultForm-email">Your email</label>\
+				<div class="modal-header text-center">\
+					<h4 class="modal-title w-100 font-weight-bold">Sign in</h4>\
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">\
+					<span aria-hidden="true">&times;</span>\
+					</button>\
 				</div>\
-				<div class="md-form mb-4">\
-				<i class="fas fa-lock prefix grey-text"></i>\
-				<input type="password" id="defaultForm-pass" class="form-control validate">\
-				<label data-error="wrong" data-success="right" for="defaultForm-pass">Your password</label>\
+				<div class="modal-body mx-3">\
+					<div class="md-form mb-5">\
+					<i class="fas fa-envelope prefix grey-text"></i>\
+					<input type="email" id="defaultForm-email" class="form-control validate">\
+					<label data-error="wrong" data-success="right" for="defaultForm-email">Your email</label>\
+					</div>\
+					<div class="md-form mb-4">\
+					<i class="fas fa-lock prefix grey-text"></i>\
+					<input type="password" id="defaultForm-pass" class="form-control validate">\
+					<label data-error="wrong" data-success="right" for="defaultForm-pass">Your password</label>\
+					</div>\
 				</div>\
-			</div>\
-			<div class="modal-footer d-flex justify-content-center">\
-				<button class="btn btn-default" id="btnLogin">Login</button>\
-			</div>\
+				<div class="modal-footer d-flex justify-content-center">\
+					<button class="btn btn-default" id="btnLogin">Login</button>\
+				</div>\
 			</div>\
 		</div>\
 	</div>';
+	
+	var populSlider = '<div class="modal fade" id="modalSlider" tabindex="-1" role="dialog" aria-labelledby="mySliderLabel" aria-hidden="true" style="display:none">\
+		<div class="modal-dialog" role="document">\
+			<div class="modal-content">\
+				<div class="modal-header text-center">\
+					<h4 class="modal-title w-100 font-weight-bold">Sign in</h4>\
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">\
+					<span aria-hidden="true">&times;</span>\
+					</button>\
+				</div>\
+				<div class="modal-body mx-3">\
+					<div class="md-form mb-5">\
+						<i class="fas fa-envelope prefix grey-text"></i>\
+						<div id="slider"></div>\
+						<label data-error="wrong" data-success="right" for="defaultForm-email" id="lblLedChannel">Led channel</label>\
+					</div>\
+				</div>\
+				<div class="modal-footer d-flex justify-content-center">\
+					<button class="btn btn-default" id="btnLogin">Save</button>\
+				</div>\
+			</div>\
+		</div>\
+	</div>';
+	
+	

@@ -4,6 +4,9 @@ html {
 	margin: 0px auto; 
 	text-align: center;
 }
+body{
+	max-width: 800px;
+}
 .button { 
 	background-color: #195B6A; 
 	border: none; 
@@ -25,4 +28,12 @@ html {
 	padding: 5px;
     margin: 5px;
     width: 20%;
+}
+.c-header{
+	font-weight: bold;
+    margin-top: 15px;
+	font-size: 1.4rem;
+}
+#divTopContainer {
+	min-height: 155px;
 }
